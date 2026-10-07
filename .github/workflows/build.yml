@@ -12,9 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,13 +21,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Build mod
-        run: ./gradlew build --no-daemon
+        run: gradle build --no-daemon
 
       - name: Upload mod JAR
         uses: actions/upload-artifact@v4
